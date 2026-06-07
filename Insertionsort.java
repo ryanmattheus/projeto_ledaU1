@@ -1,4 +1,4 @@
-public class Insertionsort {
+public class InsertionSort {
     // Versão do slide
     public static void sort(Estudante[] A) {
         int n = A.length;

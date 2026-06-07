@@ -1,5 +1,5 @@
-public class Selectionsort {
-    
+public class SelectionSort {
+
     // Versão do slide — troca direta com o mínimo encontrado
     public static void sort(Estudante[] A) {
         int n = A.length;
@@ -13,6 +13,7 @@ public class Selectionsort {
             swap(A, i, minIdx);
         }
     }
+
     // Versão estável — em vez de trocar diretamente,
     // desloca os elementos maiores para a direita e insere
     // o mínimo na posição correta (sem "saltar" iguais).

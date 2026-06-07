@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class Geradorvetores {
+public class GeradorVetores {
 
     private static final String[] NOMES = {
             "Ane", "Bruno", "Caroline", "Diana", "Everton", "Fernanda",
@@ -17,9 +17,9 @@ public class Geradorvetores {
         Estudante[] vetor = new Estudante[tamanho];
         for (int i = 0; i < tamanho; i++) {
             int matricula = 10000 + i;
-            String nome   = NOMES[RANDOM.nextInt(NOMES.length)]
+            String nome = NOMES[RANDOM.nextInt(NOMES.length)]
                     + " " + NOMES[RANDOM.nextInt(NOMES.length)];
-            int nota      = RANDOM.nextInt(11); // 0 a 10
+            int nota = RANDOM.nextInt(11); // 0 a 10
             vetor[i] = new Estudante(matricula, nome, nota);
         }
         return vetor;
@@ -67,7 +67,9 @@ public class Geradorvetores {
     public static int[] gerarInteiroInvertido(int tamanho) {
         int[] vetor = gerarInteiroOrdenado(tamanho);
         for (int i = 0, j = vetor.length - 1; i < j; i++, j--) {
-            int tmp = vetor[i]; vetor[i] = vetor[j]; vetor[j] = tmp;
+            int tmp = vetor[i];
+            vetor[i] = vetor[j];
+            vetor[j] = tmp;
         }
         return vetor;
     }

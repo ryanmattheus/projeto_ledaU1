@@ -1,4 +1,4 @@
-public class Bubblesort {
+public class BubbleSort {
     // Versão do slide — sempre executa os dois loops completos
     public static void sort(Estudante[] A) {
         int n = A.length;
@@ -10,6 +10,7 @@ public class Bubblesort {
             }
         }
     }
+
     // Versão otimizada — interrompe se não houve trocas na passagem
     public static void sortOtimizado(Estudante[] A) {
         int n = A.length;
@@ -21,9 +22,11 @@ public class Bubblesort {
                     houveTroca = true;
                 }
             }
-            if (!houveTroca) break; // vetor já ordenado, para cedo
+            if (!houveTroca)
+                break; // vetor já ordenado, para cedo
         }
     }
+
     private static void swap(Estudante[] A, int i, int j) {
         Estudante tmp = A[i];
         A[i] = A[j];
