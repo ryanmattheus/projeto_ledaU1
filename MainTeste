@@ -1,0 +1,108 @@
+public class Main {
+
+    static final int[] TAMANHOS   = { 20_000 };
+    static final int TOTAL_EXEC   = 25;
+    static final int WARMUP       = 5;
+    static final int EXEC_VALIDAS = TOTAL_EXEC - WARMUP; // 20
+
+    public static void main(String[] args) {
+
+        System.out.println("=================================================");
+        System.out.println("  EXPERIMENTOS DE ORDENACAO");
+        System.out.println("  " + EXEC_VALIDAS + " execucoes validas (+"
+                            + WARMUP + " warm-up descartadas)");
+        System.out.println("=================================================");
+
+        for (int tamanho : TAMANHOS) {
+
+            System.out.println("\n\n#################################################");
+            System.out.println("  TAMANHO: " + tamanho + " elementos");
+            System.out.println("#################################################");
+
+            System.out.println("  Gerando vetores...");
+            Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho);
+            Estudante[] baseOrdenado  = GeradorVetores.gerarOrdenado(tamanho);
+            Estudante[] baseInvertido = GeradorVetores.gerarInvertido(tamanho);
+
+            // ── Bubble Sort ────────────────────────────────────────────────
+            cabecalho("BUBBLE SORT");
+            medir("BubbleSort Normal   ", "aleatorio", baseAleatorio, 0);
+            medir("BubbleSort Normal   ", "ordenado  ", baseOrdenado,  0);
+            medir("BubbleSort Normal   ", "invertido ", baseInvertido, 0);
+            medir("BubbleSort Otimizado", "aleatorio ", baseAleatorio, 1);
+            medir("BubbleSort Otimizado", "ordenado  ", baseOrdenado,  1);
+            medir("BubbleSort Otimizado", "invertido ", baseInvertido, 1);
+
+            // ── Selection Sort ─────────────────────────────────────────────
+            cabecalho("SELECTION SORT");
+            medir("SelectionSort Normal ", "aleatorio", baseAleatorio, 2);
+            medir("SelectionSort Normal ", "ordenado  ", baseOrdenado,  2);
+            medir("SelectionSort Normal ", "invertido ", baseInvertido, 2);
+            medir("SelectionSort Estavel", "aleatorio", baseAleatorio, 3);
+            medir("SelectionSort Estavel", "ordenado  ", baseOrdenado,  3);
+            medir("SelectionSort Estavel", "invertido ", baseInvertido, 3);
+
+            // ── Insertion Sort ─────────────────────────────────────────────
+            cabecalho("INSERTION SORT");
+            medir("InsertionSort        ", "aleatorio", baseAleatorio, 4);
+            medir("InsertionSort        ", "ordenado  ", baseOrdenado,  4);
+            medir("InsertionSort        ", "invertido ", baseInvertido, 4);
+        }
+
+        System.out.println("\n\n=================================================");
+        System.out.println("  FIM DOS EXPERIMENTOS");
+        System.out.println("=================================================");
+    }
+
+    // ── Método central de medição ──────────────────────────────────────────
+    // tipo: 0=BubbleNormal 1=BubbleOtim 2=SelectNormal 3=SelectEstavel 4=Insertion
+    static void medir(String nomeAlg, String cenario,
+                      Estudante[] base, int tipo) {
+
+        System.out.println("\n  >> " + nomeAlg.trim() + " | " + cenario.trim());
+        System.out.println("     Exec  | Tempo (ns)              | Tempo (ms)");
+        System.out.println("     " + "-".repeat(56));
+
+        long somaTempos = 0;
+        int execValida  = 1;
+
+        for (int exec = 0; exec < TOTAL_EXEC; exec++) {
+            Estudante[] copia = GeradorVetores.copiar(base);
+
+            long inicio = System.nanoTime();
+            switch (tipo) {
+                case 0: BubbleSort.sort(copia);            break;
+                case 1: BubbleSort.sortOtimizado(copia);   break;
+                case 2: SelectionSort.sort(copia);         break;
+                case 3: SelectionSort.sortEstavel(copia);  break;
+                case 4: InsertionSort.sort(copia);         break;
+            }
+            long fim    = System.nanoTime();
+            long tempoNs = fim - inicio;
+            double tempoMs = tempoNs / 1_000_000.0;
+
+            if (exec < WARMUP) {
+                System.out.printf("     W%-3d  | %23d ns | %10.3f ms  (warm-up)%n",
+                        exec + 1, tempoNs, tempoMs);
+            } else {
+                somaTempos += tempoNs;
+                System.out.printf("     #%-3d  | %23d ns | %10.3f ms%n",
+                        execValida, tempoNs, tempoMs);
+                execValida++;
+            }
+        }
+
+        double mediaMs = (somaTempos / (double) EXEC_VALIDAS) / 1_000_000.0;
+
+        System.out.println("     " + "-".repeat(56));
+        System.out.printf("     Soma  (%d exec. validas)  : %d ns  =  %.3f ms%n",
+                EXEC_VALIDAS, somaTempos, somaTempos / 1_000_000.0);
+        System.out.printf("     MEDIA (%d exec. validas)  :              %10.3f ms%n",
+                EXEC_VALIDAS, mediaMs);
+    }
+
+    static void cabecalho(String titulo) {
+        System.out.println("\n\n══ " + titulo
+                + " ═══════════════════════════════════════");
+    }
+}
