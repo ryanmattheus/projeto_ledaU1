@@ -25,19 +25,19 @@ public class Main {
 
             // Gera os três vetores base para este tamanho
             System.out.println("  Gerando vetores...");
-          //  Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho, 7L);
+          //  Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho, 42);
             Estudante[] baseOrdenado = GeradorVetores.gerarOrdenado(tamanho);
           //  Estudante[] baseInvertido = GeradorVetores.gerarInvertido(tamanho);
             // ── Buscas ────────────────────────────────────────────────────
             cabecalho("BUSCAS");
 
             // Vetor desordenado — para as buscas lineares
-            Estudante[] baseDesordenado = GeradorVetores.gerarAleatorio(tamanho, 7L);
+            Estudante[] baseDesordenado = GeradorVetores.gerarAleatorio(tamanho, 42);
             Estudante[] baseOrdenadoBusca = GeradorVetores.copiar(baseDesordenado);            // Vetor ordenado — obrigatório para as buscas binárias
             Arrays.sort(baseOrdenadoBusca);
 
             // Alvos: pega AMOSTRAS_BUSCA elementos que existem no vetor
-            Estudante[] alvos = escolherAlvos(baseOrdenado, AMOSTRAS_BUSCA);
+            Estudante[] alvos = escolherAlvos(baseOrdenadoBusca, AMOSTRAS_BUSCA);
 
             // Buscas lineares (no vetor DESORDENADO)
             medirBusca("Linear Iterativa  ", "desordenado", baseDesordenado, alvos, 0);
@@ -45,11 +45,11 @@ public class Main {
             medirBusca("Linear Duas Pontas", "desordenado", baseDesordenado, alvos, 2);
 
             // Buscas binárias (no vetor ORDENADO)
-            medirBusca("Binaria Iterativa ", "ordenado   ", baseOrdenado, alvos, 3);
-            medirBusca("Binaria Recursiva ", "ordenado   ", baseOrdenado, alvos, 4);
+            medirBusca("Binaria Iterativa ", "ordenado   ", baseOrdenadoBusca, alvos, 3);
+            medirBusca("Binaria Recursiva ", "ordenado   ", baseOrdenadoBusca, alvos, 4);
 
             // Comparação extra: linear no vetor ordenado (para ver a diferença)
-            medirBusca("Linear Iter (ord) ", "ordenado   ", baseOrdenado, alvos, 0);
+            medirBusca("Linear Iter (ord) ", "ordenado   ", baseOrdenadoBusca, alvos, 0);
 
             // ── Bubble Sort ────────────────────────────────────────────────
            // cabecalho("BUBBLE SORT");
