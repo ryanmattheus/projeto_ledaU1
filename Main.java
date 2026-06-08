@@ -1,5 +1,5 @@
 import java.util.Arrays;
-
+//comentearioteste
 public class Main {
 
     static final int[] TAMANHOS = { 25_000, 50_000, 100_000 }; // 25_000, 50_000, 100_000
