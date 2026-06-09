@@ -25,14 +25,14 @@ public class Main {
 
             // Gera os três vetores base para este tamanho
             System.out.println("  Gerando vetores...");
-            Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho, 42l);
+            Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho, 42L);
             Estudante[] baseOrdenado = GeradorVetores.gerarOrdenado(tamanho);
             Estudante[] baseInvertido = GeradorVetores.gerarInvertido(tamanho);
             // ── Buscas ────────────────────────────────────────────────────
             cabecalho("BUSCAS");
 
             // Vetor desordenado — para as buscas lineares
-            Estudante[] baseDesordenado = GeradorVetores.gerarAleatorio(tamanho, 42l);
+            Estudante[] baseDesordenado = GeradorVetores.gerarAleatorio(tamanho, 42L);
             Estudante[] baseOrdenadoBusca = GeradorVetores.copiar(baseDesordenado);            // Vetor ordenado — obrigatório para as buscas binárias
             Arrays.sort(baseOrdenadoBusca);
 
