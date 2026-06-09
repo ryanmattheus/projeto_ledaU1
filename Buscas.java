@@ -49,7 +49,7 @@ public class Buscas {
 
         while (esq <= dir) {
             int meio = esq + (dir - esq) / 2;   // evita overflow
-            int cmp  = vetor[meio].compareTo(alvo);
+            int cmp = vetor[meio].compareTo(alvo);
 
             if (cmp == 0) {
                 return meio;          // encontrado
@@ -74,7 +74,9 @@ public class Buscas {
         return binariaRecursivaAux(vetor, alvo, 0, vetor.length - 1);
     }
 
-    /**Auxiliar recursivo da busca binária.*/
+    /**
+     * Auxiliar recursivo da busca binária.
+     */
     private static int binariaRecursivaAux(Estudante[] vetor, Estudante alvo,
                                            int esq, int dir) {
         // Caso base: intervalo vazio → não encontrado
@@ -83,7 +85,7 @@ public class Buscas {
         }
 
         int meio = esq + (dir - esq) / 2;
-        int cmp  = vetor[meio].compareTo(alvo);
+        int cmp = vetor[meio].compareTo(alvo);
 
         if (cmp == 0) {
             return meio;                                              // encontrado
@@ -99,7 +101,8 @@ public class Buscas {
     // =========================================================================
 
 
-     /** @param vetor array de Estudante (qualquer ordem)
+    /**
+     * @param vetor array de Estudante (qualquer ordem)
      * @param alvo  elemento a ser buscado
      * @return índice do alvo ou menos 1 se não encontrado
      */
@@ -119,46 +122,6 @@ public class Buscas {
         }
 
         return -1; // não encontrado
-    }
-
-    // =========================================================================
-    // main — testes rápidos de sanidade
-    // =========================================================================
-
-    public static void main(String[] args) {
-        // Gera 20 estudantes aleatórios
-        Estudante[] base = GeradorVetores.gerarAleatorio(20, 7L);
-
-        System.out.println("=== Array original (desordenado) ===");
-        for (Estudante e : base) System.out.println(e);
-
-        // Escolhe um alvo que sabemos que existe (o elemento no índice 5)
-        Estudante alvo = GeradorVetores.copiar(base)[5];
-        System.out.println("\nAlvo buscado: " + alvo);
-
-        // --- Buscas sobre array DESORDENADO ---
-        System.out.println("\n--- Buscas no array DESORDENADO ---");
-        System.out.println("Linear Iterativa  -> idx " + linearIterativa(base, alvo));
-        System.out.println("Linear Recursiva  -> idx " + linearRecursiva(base, alvo));
-        System.out.println("Duas Pontas       -> idx " + linearDuasPontas(base, alvo));
-
-        // Ordena uma cópia para testar as buscas binárias
-        Estudante[] ordenado = GeradorVetores.copiar(base);
-        java.util.Arrays.sort(ordenado);   // usa o Comparable implementado
-
-        System.out.println("\n=== Array ordenado ===");
-        for (Estudante e : ordenado) System.out.println(e);
-
-        // Localiza o alvo no array ordenado para comparar índices
-        System.out.println("\n--- Buscas no array ORDENADO ---");
-        System.out.println("Binária Iterativa -> idx " + binariaIterativa(ordenado, alvo));
-        System.out.println("Binária Recursiva -> idx " + binariaRecursiva(ordenado, alvo));
-        System.out.println("Linear Iterativa  -> idx " + linearIterativa(ordenado, alvo));
-
-        // Busca por elemento inexistente
-        Estudante fantasma = new Estudante(9999, "Fantasma Ninguem", 5);
-        System.out.println("\nBusca por elemento inexistente: "
-                + binariaIterativa(ordenado, fantasma)); // esperado: -1
     }
 }
 

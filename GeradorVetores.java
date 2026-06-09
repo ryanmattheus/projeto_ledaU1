@@ -13,7 +13,7 @@ public class GeradorVetores {
     private static final Random RANDOM = new Random(42); // seed fixa p/ reprodutibilidade
 
     // Gera vetor aleatório de Estudantes
-    public static Estudante[] gerarAleatorio(int tamanho) {
+    public static Estudante[] gerarAleatorio(int tamanho, long L) {
         Estudante[] vetor = new Estudante[tamanho];
         for (int i = 0; i < tamanho; i++) {
             int matricula = 10000 + i;
@@ -27,7 +27,7 @@ public class GeradorVetores {
 
     // Gera vetor já ordenado (usa Arrays.sort do Java como referência)
     public static Estudante[] gerarOrdenado(int tamanho) {
-        Estudante[] vetor = gerarAleatorio(tamanho);
+        Estudante[] vetor = gerarAleatorio(tamanho, 42L);
         Arrays.sort(vetor); // ordenação de referência
         return vetor;
     }

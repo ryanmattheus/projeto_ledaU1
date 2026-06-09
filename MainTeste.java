@@ -20,7 +20,7 @@ public class MainTeste {
             System.out.println("#################################################");
 
             System.out.println("  Gerando vetores...");
-            Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho);
+            Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho, 7L);
             Estudante[] baseOrdenado = GeradorVetores.gerarOrdenado(tamanho);
             Estudante[] baseInvertido = GeradorVetores.gerarInvertido(tamanho);
 
