@@ -1,12 +1,12 @@
 import java.util.Arrays;
-//comentearioteste
+//comentarioteste
 public class Main {
 
-    static final int[] TAMANHOS = { 50 }; // 25_000, 50_000, 100_000
+    static final int[] TAMANHOS = { 25_000, 50_000, 100_000 };
     static final int TOTAL_EXEC = 25;
     static final int WARMUP = 5;
     static final int EXEC_VALIDAS = TOTAL_EXEC - WARMUP; // 20
-    static final int  AMOSTRAS_BUSCA = 10;
+    static final int AMOSTRAS_BUSCA = 10;
 
     public static void main(String[] args) {
 
@@ -28,6 +28,7 @@ public class Main {
             Estudante[] baseAleatorio = GeradorVetores.gerarAleatorio(tamanho, 42L);
             Estudante[] baseOrdenado = GeradorVetores.gerarOrdenado(tamanho);
             Estudante[] baseInvertido = GeradorVetores.gerarInvertido(tamanho);
+
             // ── Buscas ────────────────────────────────────────────────────
             cabecalho("BUSCAS");
 
@@ -74,49 +75,141 @@ public class Main {
             medir("InsertionSort        ", "aleatorio", baseAleatorio, 4);
             medir("InsertionSort        ", "ordenado  ", baseOrdenado, 4);
             medir("InsertionSort        ", "invertido ", baseInvertido, 4);
+
+            // ── Merge Sort / Tim Sort ──────────────────────────────────────
+            cabecalho("MERGE SORT / TIM SORT");
+            medir("MergeSort Classico   ", "aleatorio", baseAleatorio, 5);
+            medir("MergeSort Classico   ", "ordenado  ", baseOrdenado, 5);
+            medir("MergeSort Classico   ", "invertido ", baseInvertido, 5);
+            medir("TimSort (Java)       ", "aleatorio", baseAleatorio, 6);
+            medir("TimSort (Java)       ", "ordenado  ", baseOrdenado, 6);
+            medir("TimSort (Java)       ", "invertido ", baseInvertido, 6);
+
+            // ── Quick Sort ─────────────────────────────────────────────────
+            cabecalho("QUICK SORT (OBJETOS)");
+            medir("QuickSort Slide      ", "aleatorio", baseAleatorio, 7);
+            medir("QuickSort Slide      ", "ordenado  ", baseOrdenado, 7);
+            medir("QuickSort Slide      ", "invertido ", baseInvertido, 7);
+            medir("QuickSort + Shuffle  ", "aleatorio", baseAleatorio, 8);
+            medir("QuickSort + Shuffle  ", "ordenado  ", baseOrdenado, 8);
+            medir("QuickSort + Shuffle  ", "invertido ", baseInvertido, 8);
+
+            // ── Quick Sort (Extra Primitivos - int[]) ──────────────────────
+            cabecalho("QUICK SORT (EXTRA PRIMITIVOS - int[])");
+            int[] baseIntAleatorio = GeradorVetores.gerarInteiroAleatorio(tamanho);
+            int[] baseIntOrdenado = GeradorVetores.gerarInteiroOrdenado(tamanho);
+            int[] baseIntInvertido = GeradorVetores.gerarInteiroInvertido(tamanho);
+
+            medirPrimitivo("QuickSort Primitivo  ", "aleatorio", baseIntAleatorio, 0);
+            medirPrimitivo("QuickSort Primitivo  ", "ordenado  ", baseIntOrdenado, 0);
+            medirPrimitivo("QuickSort Primitivo  ", "invertido ", baseIntInvertido, 0);
+            medirPrimitivo("QuickSort Java Dual  ", "aleatorio", baseIntAleatorio, 1);
+            medirPrimitivo("QuickSort Java Dual  ", "ordenado  ", baseIntOrdenado, 1);
+            medirPrimitivo("QuickSort Java Dual  ", "invertido ", baseIntInvertido, 1);
         }
 
     }
 
     // ── Método central de medição ──────────────────────────────────────────
-     //tipo: 0=BubbleNormal 1=BubbleOtim 2=SelectNormal 3=SelectEstavel 4=Insertion
     static void medir(String nomeAlg, String cenario,
-            Estudante[] base, int tipo) {
+                      Estudante[] base, int tipo) {
         long somaTempos = 0;
+        boolean estourou = false;
 
         for (int exec = 0; exec < TOTAL_EXEC; exec++) {
             Estudante[] copia = GeradorVetores.copiar(base);
 
             long inicio = System.nanoTime();
-            switch (tipo) {
-                case 0:
-                    BubbleSort.sort(copia);
-                    break;
-                case 1:
-                    BubbleSort.sortOtimizado(copia);
-                    break;
-             case 2:
-                    SelectionSort.sort(copia);
-                    break;
-                case 3:
-                    SelectionSort.sortEstavel(copia);
-                    break;
-                case 4:
-                    InsertionSort.sort(copia);
-                    break;
+            try {
+                switch (tipo) {
+                    case 0:
+                        BubbleSort.sort(copia);
+                        break;
+                    case 1:
+                        BubbleSort.sortOtimizado(copia);
+                        break;
+                    case 2:
+                        SelectionSort.sort(copia);
+                        break;
+                    case 3:
+                        SelectionSort.sortEstavel(copia);
+                        break;
+                    case 4:
+                        InsertionSort.sort(copia);
+                        break;
+                    case 5:
+                        MergeSort.sort(copia);
+                        break;
+                    case 6:
+                        MergeSort.sortJavaTimSort(copia);
+                        break;
+                    case 7:
+                        QuickSort.sort(copia);
+                        break;
+                    case 8:
+                        QuickSort.sortComShuffle(copia);
+                        break;
+                }
+            } catch (StackOverflowError e) {
+                estourou = true;
+                break;
             }
             long fim = System.nanoTime();
 
             if (exec >= WARMUP) {
                 somaTempos += (fim - inicio);
             }
-         }
+        }
 
-       double mediaMs = (somaTempos / (double) EXEC_VALIDAS) / 1_000_000.0;
-        System.out.printf("  %-22s | %-9s | media: %10.3f ms%n",
-               nomeAlg, cenario, mediaMs);
+        if (estourou) {
+            System.out.printf("  %-22s | %-9s | StackOverflowError (pilha estourou)%n",
+                    nomeAlg, cenario);
+        } else {
+            double mediaMs = (somaTempos / (double) EXEC_VALIDAS) / 1_000_000.0;
+            System.out.printf("  %-22s | %-9s | media: %10.3f ms%n",
+                    nomeAlg, cenario, mediaMs);
+        }
     }
-    
+
+    // Método para medir o experimento com int[]
+    static void medirPrimitivo(String nomeAlg, String cenario, int[] base, int tipo) {
+        long somaTempos = 0;
+        boolean estourou = false;
+
+        for (int exec = 0; exec < TOTAL_EXEC; exec++) {
+            int[] copia = GeradorVetores.copiarInteiro(base);
+
+            long inicio = System.nanoTime();
+            try {
+                switch (tipo) {
+                    case 0:
+                        QuickSort.sortPrimitivo(copia);
+                        break;
+                    case 1:
+                        QuickSort.sortJavaPrimitivo(copia);
+                        break;
+                }
+            } catch (StackOverflowError e) {
+                estourou = true;
+                break;
+            }
+            long fim = System.nanoTime();
+
+            if (exec >= WARMUP) {
+                somaTempos += (fim - inicio);
+            }
+        }
+
+        if (estourou) {
+            System.out.printf("  %-22s | %-9s | StackOverflowError (pilha estourou)%n",
+                    nomeAlg, cenario);
+        } else {
+            double mediaMs = (somaTempos / (double) EXEC_VALIDAS) / 1_000_000.0;
+            System.out.printf("  %-22s | %-9s | media: %10.3f ms%n",
+                    nomeAlg, cenario, mediaMs);
+        }
+    }
+
     // tipo: 0=LinearIter  1=LinearRec  2=DuasPontas 3=BinariaIter 4=BinariaRec
     static void medirBusca(String nomeAlg, String cenario,
                            Estudante[] vetor, Estudante[] alvos, int tipo) {
@@ -164,18 +257,12 @@ public class Main {
             System.out.printf("  %-22s | %-11s | media: %10.6f ms%n",
                     nomeAlg, cenario, mediaMs);
         }
-
-        // divide pelo número de alvos para obter o tempo médio por busca
-        double mediaMs = (somaTempos / (double) EXEC_VALIDAS / AMOSTRAS_BUSCA)
-                / 1_000_000.0;
-        System.out.printf("  %-22s | %-11s | media: %10.6f ms%n",
-                nomeAlg, cenario, mediaMs);
     }
     static Estudante[] escolherAlvos(Estudante[] vetor, int qtd) {
         int passo = vetor.length / qtd;
         Estudante[] alvos = new Estudante[qtd];
         for (int i = 0; i < qtd; i++) {
-            alvos[i] = vetor[i * passo]; // pega elementos distribuídos pelo vetor
+            alvos[i] = vetor[i * passo];
         }
         return alvos;
     }
