@@ -1,4 +1,5 @@
 import java.util.Arrays;
+
 //comentarioteste
 public class Main {
 
@@ -34,7 +35,8 @@ public class Main {
 
             // Vetor desordenado — para as buscas lineares
             Estudante[] baseDesordenado = GeradorVetores.gerarAleatorio(tamanho, 42L);
-            Estudante[] baseOrdenadoBusca = GeradorVetores.copiar(baseDesordenado);            // Vetor ordenado — obrigatório para as buscas binárias
+            Estudante[] baseOrdenadoBusca = GeradorVetores.copiar(baseDesordenado); // Vetor ordenado — obrigatório para
+                                                                                    // as buscas binárias
             Arrays.sort(baseOrdenadoBusca);
 
             // Alvos: pega AMOSTRAS_BUSCA elementos que existem no vetor
@@ -93,6 +95,15 @@ public class Main {
             medir("QuickSort + Shuffle  ", "aleatorio", baseAleatorio, 8);
             medir("QuickSort + Shuffle  ", "ordenado  ", baseOrdenado, 8);
             medir("QuickSort + Shuffle  ", "invertido ", baseInvertido, 8);
+            medir("QuickSort Java (Obj) ", "aleatorio", baseAleatorio, 9);
+            medir("QuickSort Java (Obj) ", "ordenado  ", baseOrdenado, 9);
+            medir("QuickSort Java (Obj) ", "invertido ", baseInvertido, 9);
+
+            // ── Counting Sort ──────────────────────────────────────────────
+            cabecalho("COUNTING SORT");
+            medir("CountingSort         ", "aleatorio", baseAleatorio, 10);
+            medir("CountingSort         ", "ordenado  ", baseOrdenado, 10);
+            medir("CountingSort         ", "invertido ", baseInvertido, 10);
 
             // ── Quick Sort (Extra Primitivos - int[]) ──────────────────────
             cabecalho("QUICK SORT (EXTRA PRIMITIVOS - int[])");
@@ -112,7 +123,7 @@ public class Main {
 
     // ── Método central de medição ──────────────────────────────────────────
     static void medir(String nomeAlg, String cenario,
-                      Estudante[] base, int tipo) {
+            Estudante[] base, int tipo) {
         long somaTempos = 0;
         boolean estourou = false;
 
@@ -148,6 +159,12 @@ public class Main {
                         break;
                     case 8:
                         QuickSort.sortComShuffle(copia);
+                        break;
+                    case 9:
+                        QuickSort.sortJavaObjeto(copia);
+                        break;
+                    case 10:
+                        CountingSort.sort(copia);
                         break;
                 }
             } catch (StackOverflowError e) {
@@ -210,9 +227,9 @@ public class Main {
         }
     }
 
-    // tipo: 0=LinearIter  1=LinearRec  2=DuasPontas 3=BinariaIter 4=BinariaRec
+    // tipo: 0=LinearIter 1=LinearRec 2=DuasPontas 3=BinariaIter 4=BinariaRec
     static void medirBusca(String nomeAlg, String cenario,
-                           Estudante[] vetor, Estudante[] alvos, int tipo) {
+            Estudante[] vetor, Estudante[] alvos, int tipo) {
         long somaTempos = 0;
         boolean estourou = false;
 
@@ -238,7 +255,7 @@ public class Main {
                             break;
                     }
                 }
-            } catch(StackOverflowError e) {
+            } catch (StackOverflowError e) {
                 estourou = true;
                 break;
             }
@@ -258,6 +275,7 @@ public class Main {
                     nomeAlg, cenario, mediaMs);
         }
     }
+
     static Estudante[] escolherAlvos(Estudante[] vetor, int qtd) {
         int passo = vetor.length / qtd;
         Estudante[] alvos = new Estudante[qtd];
@@ -266,6 +284,7 @@ public class Main {
         }
         return alvos;
     }
+
     static void cabecalho(String titulo) {
         System.out.println("\n── " + titulo
                 + " ─────────────────────────────────────");

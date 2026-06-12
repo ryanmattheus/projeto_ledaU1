@@ -101,7 +101,15 @@ public class QuickSort {
     }
 
     // =========================================================================
-    // 4. Chamada do Dual-Pivot QuickSort nativo do Java para primitivos
+    // 4. Versão Java para Objetos — Arrays.sort usa TimSort internamente para
+    //    objetos, mas serve como referência de ordenação nativa da plataforma.
+    // =========================================================================
+    public static void sortJavaObjeto(Estudante[] A) {
+        Arrays.sort(A);
+    }
+
+    // =========================================================================
+    // 5. Chamada do Dual-Pivot QuickSort nativo do Java para primitivos
     // =========================================================================
     public static void sortJavaPrimitivo(int[] A) {
         Arrays.sort(A);
