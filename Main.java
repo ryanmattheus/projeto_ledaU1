@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-//comentarioteste
 public class Main {
 
     static final int[] TAMANHOS = { 25_000, 50_000, 100_000 };
@@ -95,15 +94,6 @@ public class Main {
             medir("QuickSort + Shuffle  ", "aleatorio", baseAleatorio, 8);
             medir("QuickSort + Shuffle  ", "ordenado  ", baseOrdenado, 8);
             medir("QuickSort + Shuffle  ", "invertido ", baseInvertido, 8);
-            medir("QuickSort Java (Obj) ", "aleatorio", baseAleatorio, 9);
-            medir("QuickSort Java (Obj) ", "ordenado  ", baseOrdenado, 9);
-            medir("QuickSort Java (Obj) ", "invertido ", baseInvertido, 9);
-
-            // ── Counting Sort ──────────────────────────────────────────────
-            cabecalho("COUNTING SORT");
-            medir("CountingSort         ", "aleatorio", baseAleatorio, 10);
-            medir("CountingSort         ", "ordenado  ", baseOrdenado, 10);
-            medir("CountingSort         ", "invertido ", baseInvertido, 10);
 
             // ── Quick Sort (Extra Primitivos - int[]) ──────────────────────
             cabecalho("QUICK SORT (EXTRA PRIMITIVOS - int[])");
@@ -159,12 +149,6 @@ public class Main {
                         break;
                     case 8:
                         QuickSort.sortComShuffle(copia);
-                        break;
-                    case 9:
-                        QuickSort.sortJavaObjeto(copia);
-                        break;
-                    case 10:
-                        CountingSort.sort(copia);
                         break;
                 }
             } catch (StackOverflowError e) {

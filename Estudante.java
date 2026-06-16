@@ -26,9 +26,17 @@ public class Estudante implements Comparable<Estudante> {
         return this.matricula - outro.matricula;
     }
 
-    public int getMatricula() { return matricula; }
-    public String getNome()   { return nome; }
-    public int getNota()      { return nota; }
+    public int getMatricula() {
+        return matricula;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getNota() {
+        return nota;
+    }
 
     @Override
     public String toString() {

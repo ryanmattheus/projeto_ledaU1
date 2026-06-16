@@ -14,9 +14,8 @@ public class SelectionSort {
         }
     }
 
-    // Versão estável — em vez de trocar diretamente,
-    // desloca os elementos maiores para a direita e insere
-    // o mínimo na posição correta (sem "saltar" iguais).
+    // Versão estável — desloca os elementos para a direita em vez de trocar
+    // diretamente
     public static void sortEstavel(Estudante[] A) {
         int n = A.length;
         for (int i = 0; i < n - 1; i++) {
@@ -27,8 +26,8 @@ public class SelectionSort {
                     minIdx = j;
                 }
             }
-            // Guarda o mínimo e desloca os elementos para a direita
-            // até a posição onde o mínimo estava, preservando a ordem
+            // Guarda o mínimo e desloca os elementos para a direita até a posição onde o
+            // mínimo estava, preservando a ordem
             Estudante min = A[minIdx];
             while (minIdx > i) {
                 A[minIdx] = A[minIdx - 1];

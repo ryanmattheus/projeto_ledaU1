@@ -25,7 +25,7 @@ public class GeradorVetores {
         return vetor;
     }
 
-    // Gera vetor já ordenado (usa Arrays.sort do Java como referência)
+    // Gera vetor já ordenado
     public static Estudante[] gerarOrdenado(int tamanho) {
         Estudante[] vetor = gerarAleatorio(tamanho, 42L);
         Arrays.sort(vetor); // ordenação de referência
@@ -49,7 +49,7 @@ public class GeradorVetores {
         return Arrays.copyOf(original, original.length);
     }
 
-    // Gera vetor aleatório de int[] (para experimento extra com QuickSort)
+    // Gera vetor aleatório de int (para experimento extra com QuickSort)
     public static int[] gerarInteiroAleatorio(int tamanho) {
         int[] vetor = new int[tamanho];
         for (int i = 0; i < tamanho; i++) {

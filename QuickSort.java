@@ -3,9 +3,7 @@ import java.util.Random;
 
 public class QuickSort {
 
-    // =========================================================================
     // 1. Versão do Slide (Clássica para Objetos)
-    // =========================================================================
     public static void sort(Estudante[] A) {
         if (A == null || A.length <= 1) {
             return;
@@ -41,9 +39,7 @@ public class QuickSort {
         A[j] = temp;
     }
 
-    // =========================================================================
     // 2. Versão do Slide + Shuffle (Evita o pior caso O(n²) em vetores ordenados)
-    // =========================================================================
     public static void sortComShuffle(Estudante[] A) {
         if (A == null || A.length <= 1) {
             return;
@@ -54,16 +50,14 @@ public class QuickSort {
 
     // Algoritmo de Fisher-Yates para o Shuffle prático
     private static void shuffle(Estudante[] A) {
-        Random rand = new Random(42); // Mesma seed estável do projeto
+        Random rand = new Random(42);
         for (int i = A.length - 1; i > 0; i--) {
             int j = rand.nextInt(i + 1);
             swap(A, i, j);
         }
     }
 
-    // =========================================================================
     // 3. Experimento Extra: QuickSort Clássico para tipos primitivos (int[])
-    // =========================================================================
     public static void sortPrimitivo(int[] A) {
         if (A == null || A.length <= 1) {
             return;
@@ -75,7 +69,6 @@ public class QuickSort {
         if (esq < dir) {
             int indicePivo = partitionPrimitivo(A, esq, dir);
             quickSortPrimitivoRecursivo(A, esq, indicePivo - 1);
-            // CORREÇÃO FEITA AQUI: Estava com "e" no final
             quickSortPrimitivoRecursivo(A, indicePivo + 1, dir);
         }
     }
@@ -100,17 +93,12 @@ public class QuickSort {
         A[j] = temp;
     }
 
-    // =========================================================================
-    // 4. Versão Java para Objetos — Arrays.sort usa TimSort internamente para
-    //    objetos, mas serve como referência de ordenação nativa da plataforma.
-    // =========================================================================
+    // 4. Versão Java para Objetos
     public static void sortJavaObjeto(Estudante[] A) {
         Arrays.sort(A);
     }
 
-    // =========================================================================
-    // 5. Chamada do Dual-Pivot QuickSort nativo do Java para primitivos
-    // =========================================================================
+    // 5. Chamada do Dual-Pivot QuickSort
     public static void sortJavaPrimitivo(int[] A) {
         Arrays.sort(A);
     }
