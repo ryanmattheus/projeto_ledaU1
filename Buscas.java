@@ -77,13 +77,8 @@ public class Buscas {
         }
     }
 
-    /**
-     * 5. Busca Linear Iterativa Duas Pontas
-     * 
-     * @param vetor array de Estudante (qualquer ordem)
-     * @param alvo  elemento a ser buscado
-     * @return índice do alvo ou menos 1 se não encontrado
-     */
+     //5. Busca Linear Iterativa Duas Pontas
+    
     public static int linearDuasPontas(Estudante[] vetor, Estudante alvo) {
         int esq = 0;
         int dir = vetor.length - 1;
